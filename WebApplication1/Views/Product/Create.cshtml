@@ -1,0 +1,66 @@
+﻿@model WebApplication1.Models.Product
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Product</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>  //商品名稱
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>  //簡介
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Content" class="control-label"></label>  //內容
+                <textarea asp-for="Content" class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>  //單價
+                <input asp-for="Price" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Stock" class="control-label"></label>  //庫存
+                <input asp-for="Stock" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>  //圖片
+                <input type="file" name="Image" id="myimg" class="form-control-file">
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            <img id="preview" style="max-height:200px;" />
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label"></label>  //類別
+                <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.Categories"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+<script src="https://code.jquery.com/jquery-3.1.0.js"></script>
+<script>
+    $('#myimg').on('change', function (e) {
+        const file = this.files[0];
+        const objectURL = URL.createObjectURL(file);    // 使用 createObjectURL 產生圖片url
+        $('#preview').attr('src', objectURL);
+    });
+</script>
